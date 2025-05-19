@@ -107,4 +107,3 @@ set +x
 echo "install firefox desktop file into ~/.local/share/applications?"
 ask_yn
 reset-ask_yn
-

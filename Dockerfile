@@ -1,6 +1,6 @@
 # vim: sw=4 et
 
-FROM fedora:41
+FROM fedora:42
 
 RUN set -ex \
     && dnf update --refresh --assumeyes
@@ -35,6 +35,7 @@ RUN set -ex \
         libzstd-devel \
         lld \
         make \
+        mold \
         openssl-devel \
         pax-utils \
         python3 \
@@ -52,10 +53,10 @@ RUN set -ex \
     && dnf install --assumeyes python3 python3-pip git curl wget zip vim autoconf213 nodejs which npm python3-devel redhat-rpm-config alsa-lib-devel dbus-glib-devel glibc-static gtk2-devel libstdc++-static libXt-devel nasm pulseaudio-libs-devel yasm gcc-c++ mercurial perl perl-FindBin perl-JSON-PP openssl-devel
 
 RUN set -ex \
-    && dnf install --assumeyes acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate plocate ncdu neovim NetworkManager-tui python3 redhat-lsb-core rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep langpacks-en
+    && dnf install --assumeyes acl bind-utils coreutils curl findutils git htop iftop iotop iptables logrotate plocate ncdu neovim NetworkManager-tui python3 redhat-lsb rsync sudo sqlite tmux util-linux-user vim wget which zsh zsh-autosuggestions zsh-syntax-highlighting zstd python3-pyyaml python3-rich ripgrep langpacks-en
 
 WORKDIR /src
-RUN wget https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboot/bin/bootstrap.py -O /src/bootstrap.py
+RUN wget https://github.com/mozilla-firefox/firefox/raw/refs/heads/main/python/mozboot/bin/bootstrap.py -O /src/bootstrap.py
 
 ENV SHELL=/usr/bin/zsh
 ENV PATH="/root/bin:$PATH"
@@ -83,8 +84,9 @@ RUN set -ex \
     && sh install-rust.sh -y \
     && rm install-rust.sh
 
+# https://github.com/mozilla/sccache/releases/latest
 RUN set -ex \
-    && export SCCACHE_VERSION="v0.8.2" \
+    && export SCCACHE_VERSION="v0.10.0" \
     && wget --no-verbose "https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" -O "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
     && tar -xf "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
     && mkdir -pv "/root/.cargo/bin" \

@@ -76,7 +76,7 @@ for element in os.scandir(patch_path):
     # - ask if the patch should be applied
     # - save answer in config object
     if patch_name not in config:
-        config[patch_name] = ask_yn(f'[bold]Name: {patch_name}[/bold]\nDescrption: {patch_description}\nApply patch?', True)
+        config[patch_name] = ask_yn(f'[bold]Name: {patch_name}[/bold]\nDescription: {patch_description}\nApply patch?', True)
         print()
 
     # if answer is "yes, it should be applied", apply patch
