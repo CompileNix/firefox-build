@@ -76,19 +76,20 @@ if [ -d "$HOME/.mozilla/firefox" ]; then
     reset-ask_yn
 fi
 
-# link firefox
+# install firefox
 function ask_yn_y_callback() {
     set -x
     pushd ~/bin
+    mkdir -pv firefox-data
     unlink ./firefox
-    ln -sfv "${install_dir}/${version}/firefox" ./firefox
-    cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
-    ls -lah --color=auto "${install_dir}/firefox"
+    rsync -rav --delete "${install_dir}/${version}/firefox/" "./firefox-data"
+    ln -sfv "./firefox-data/firefox" ./firefox
+    # cp -v "${install_dir}/${version}/firefox/browser/chrome/icons/default/default128.png" "firefox.png"
     popd
     set +x
 }
 if [ -d "$HOME/.mozilla/firefox" ]; then
-    echo "link firefox into ~/bin?"
+    echo "install firefox into ~/bin?"
     ask_yn
     reset-ask_yn
 fi

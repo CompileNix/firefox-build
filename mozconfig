@@ -18,16 +18,18 @@ export CXXFLAGS="${CXXFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native -m
 export LDFLAGS="${LDFLAGS} -Wl,-z,relro -Wl,--as-needed -Wl,-z,pack-relative-relocs -Wl,-z,now -Wl,--build-id=sha1 -Wl,--no-keep-memory"
 export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL} -Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes --cap-lints=warn"
 
+export MOZ_APP_REMOTINGNAME=firefox
 export CARGO_BUILD_JOBS=1
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_LTO=true
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
 export RUSTC_WRAPPER="/root/.cargo/bin/sccache"
 export MOZILLA_OFFICIAL=1
-
 export STRIP=/bin/true
+# Don't try to send libnotify notifications during build
+export MOZ_NOSPAM=1
 
-mk_add_options MOZ_APP_REMOTINGNAME=Firefox
+mk_add_options MOZ_APP_REMOTINGNAME=firefox
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
@@ -38,10 +40,12 @@ mk_add_options CARGO_PROFILE_RELEASE_LTO=true
 mk_add_options CARGO_PROFILE_RELEASE_OPT_LEVEL=$RUSTC_OPT_LEVEL
 mk_add_options RUSTC_WRAPPER="/root/.cargo/bin/sccache"
 mk_add_options STRIP=/bin/true
+mk_add_options MOZ_NOSPAM=1
 
 ac_add_options --enable-project=browser
 ac_add_options --enable-sandbox
 ac_add_options --enable-rust-simd
+# ac_add_options --enable-debug
 ac_add_options --enable-release
 ac_add_options --enable-optimize=-O${OPT_LEVEL}
 ac_add_options --with-ccache=/root/.cargo/bin/sccache
@@ -56,10 +60,10 @@ ac_add_options --disable-updater
 ac_add_options --disable-tests
 ac_add_options --disable-parental-controls
 ac_add_options --enable-debug-symbols
-#ac_add_options --enable-debug
 ac_add_options --disable-install-strip
 ac_add_options --enable-replace-malloc
 ac_add_options --enable-lto
+# ac_add_options --enable-lto=cross,full
 ac_add_options --enable-js-shell
 ac_add_options --with-unsigned-addon-scopes=app,system
 ac_add_options --allow-addon-sideload
@@ -77,5 +81,5 @@ ac_add_options --with-system-zlib
 # to systems without the user's knowledge or permission.
 # As a result of this, use the following command to permanently disable
 # telemetry reporting in Firefox.
-export MOZ_TELEMETRY_REPORTING=
-ac_add_options MOZ_TELEMETRY_REPORTING=
+# export MOZ_TELEMETRY_REPORTING=
+# ac_add_options MOZ_TELEMETRY_REPORTING=
