@@ -8,6 +8,8 @@ JOBS=$(nproc)
 if [ "$JOBS" -ge 8 ]; then JOBS=$(( JOBS - 4 )); else JOBS=$(( JOBS / 2 )); fi
 if [ "$JOBS" -le 1 ]; then JOBS=1; fi
 export JOBS="$JOBS"
+# export JOBS="$(nproc)"
+# export JOBS="2"
 
 # export CFLAGS="${CFLAGS} -O${OPT_LEVEL} -pipe -march=native -mtune=native"
 # export CXXFLAGS="${CXXFLAGS} -pipe -march=native -mtune=native"
@@ -19,6 +21,7 @@ export LDFLAGS="${LDFLAGS} -Wl,-z,relro -Wl,--as-needed -Wl,-z,pack-relative-rel
 export RUSTFLAGS="-C target-cpu=native -C opt-level=${RUSTC_OPT_LEVEL} -Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes --cap-lints=warn"
 
 export MOZ_APP_REMOTINGNAME=firefox
+# number of rustc compiler jobs is already controled by gmake (MOZ_PARALLEL_BUILD -> JOBS)
 export CARGO_BUILD_JOBS=1
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_LTO=true
@@ -34,6 +37,7 @@ mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-firefox
 mk_add_options MOZ_MAKE_FLAGS="-j${JOBS}"
 mk_add_options AUTOCLOBBER=1
 mk_add_options MOZ_PARALLEL_BUILD=$JOBS
+# number of rustc compiler jobs is already controled by gmake
 mk_add_options CARGO_BUILD_JOBS=1
 mk_add_options CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 mk_add_options CARGO_PROFILE_RELEASE_LTO=true
