@@ -1,6 +1,6 @@
 # vim: sw=4 et
 
-FROM fedora:42
+FROM fedora:43
 
 RUN set -ex \
     && dnf update --refresh --assumeyes
