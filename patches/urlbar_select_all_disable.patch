@@ -1,11 +1,24 @@
-diff -r b73ccdf1f861 browser/components/urlbar/UrlbarInput.sys.mjs
---- a/browser/components/urlbar/UrlbarInput.sys.mjs	Thu Aug 29 07:50:02 2024 +0000
-+++ b/browser/components/urlbar/UrlbarInput.sys.mjs	Mon Sep 09 12:06:32 2024 +0000
-@@ -3538,6 +3538,7 @@
+diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
+index f482f5a57547..8b96434b84d1 100644
+--- a/browser/components/search/content/searchbar.js
++++ b/browser/components/search/content/searchbar.js
+@@ -559,6 +559,7 @@
+      * searchbar state, and whether the selection is empty.
+      */
+     _maybeSelectAll() {
++      return;
+       if (
+         !this._preventClickSelectsAll &&
+         document.activeElement == this._textbox &&
+diff --git a/browser/components/urlbar/content/UrlbarInput.mjs b/browser/components/urlbar/content/UrlbarInput.mjs
+index edb0482f0bfb..7731d5ebfb08 100644
+--- a/browser/components/urlbar/content/UrlbarInput.mjs
++++ b/browser/components/urlbar/content/UrlbarInput.mjs
+@@ -4561,6 +4561,7 @@ export class UrlbarInput extends HTMLElement {
     *  Urlbar state, and whether the selection is empty.
     */
-   _maybeSelectAll() {
+   #maybeSelectAll() {
 +    return;
      if (
        !this._preventClickSelectsAll &&
-       this._compositionState != lazy.UrlbarUtils.COMPOSITION.COMPOSING &&
+       this.#compositionState != lazy.UrlbarUtils.COMPOSITION.COMPOSING &&
