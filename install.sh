@@ -41,7 +41,7 @@ fi
 # backup current firefox profiles
 function ask_yn_y_callback() {
     set -x
-    target_dir="/tmp/$UID/.mozilla/$current_firefox_version"
+    target_dir="/var/tmp/$UID/.mozilla/$current_firefox_version"
     if [ -d "$target_dir" ]; then
         rm -rf "$target_dir"
     fi
@@ -108,3 +108,5 @@ set +x
 echo "install firefox desktop file into ~/.local/share/applications?"
 ask_yn
 reset-ask_yn
+
+echo "Remember to rm -rf \"$target_dir\""
