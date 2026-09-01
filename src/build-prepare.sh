@@ -8,6 +8,7 @@ sudo dnf update --assumeyes
 
 # hg revert --all --no-backup
 # hg pull
+git config --global --add safe.directory /src/firefox
 git reset --hard
 git fetch --all
 

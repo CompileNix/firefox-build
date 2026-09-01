@@ -1,6 +1,6 @@
 # vim: sw=4 et
 
-FROM fedora:43
+FROM fedora:44
 
 RUN set -ex \
     && dnf update --refresh --assumeyes
@@ -86,7 +86,7 @@ RUN set -ex \
 
 # https://github.com/mozilla/sccache/releases/latest
 RUN set -ex \
-    && export SCCACHE_VERSION="v0.14.0" \
+    && export SCCACHE_VERSION="v0.15.0" \
     && wget --no-verbose "https://github.com/mozilla/sccache/releases/download/${SCCACHE_VERSION}/sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" -O "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
     && tar -xf "sccache-${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
     && mkdir -pv "/root/.cargo/bin" \

@@ -1,8 +1,8 @@
 diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
-index f482f5a57547..8b96434b84d1 100644
+index 3efd14668bfc..b2062e527250 100644
 --- a/browser/components/search/content/searchbar.js
 +++ b/browser/components/search/content/searchbar.js
-@@ -559,6 +559,7 @@
+@@ -563,6 +563,7 @@
       * searchbar state, and whether the selection is empty.
       */
      _maybeSelectAll() {
@@ -11,14 +11,14 @@ index f482f5a57547..8b96434b84d1 100644
          !this._preventClickSelectsAll &&
          document.activeElement == this._textbox &&
 diff --git a/browser/components/urlbar/content/UrlbarInput.mjs b/browser/components/urlbar/content/UrlbarInput.mjs
-index edb0482f0bfb..7731d5ebfb08 100644
+index 319fb6870ec1..e1a38e5adfbf 100644
 --- a/browser/components/urlbar/content/UrlbarInput.mjs
 +++ b/browser/components/urlbar/content/UrlbarInput.mjs
-@@ -4561,6 +4561,7 @@ export class UrlbarInput extends HTMLElement {
+@@ -5167,6 +5167,7 @@ ${
     *  Urlbar state, and whether the selection is empty.
     */
    #maybeSelectAll() {
 +    return;
      if (
-       !this._preventClickSelectsAll &&
-       this.#compositionState != lazy.UrlbarUtils.COMPOSITION.COMPOSING &&
+       !this.#preventClickSelectsAll &&
+       this.#compositionState != UrlbarShared.COMPOSITION.COMPOSING &&
