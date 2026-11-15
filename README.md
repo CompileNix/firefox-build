@@ -34,7 +34,7 @@ When asked for Destination directory for clone, enter: `firefox`
 
 ```sh
 sudo mkdir -v dist firefox mozbuild; sudo chmod -v 0777 dist firefox mozbuild
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/root/.mozbuild:z -v $(pwd)/firefox:/src/firefox:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build --hostname firefox-build firefox-build:fedora
+./run-container.sh --interactive
 
 python3 bootstrap.py --no-interactive --application-choice browser
 ```
@@ -47,7 +47,7 @@ When asked for `Destination directory for Git clone`, enter nothing (hit enter).
 ```sh
 docker build -t firefox-build:fedora .
 
-docker run -v $(pwd)/dist:/dist:z -v $(pwd)/mozbuild:/root/.mozbuild:z -v $(pwd)/sccache:/root/.cache/sccache:z -v $(pwd)/firefox:/src/firefox:z -v $(pwd)/mozconfig:/src/mozconfig:z -v $(pwd)/patches:/src/patches:z -it --rm --name firefox-build --hostname firefox-build firefox-build:fedora
+./run-container.sh --interactive
 
 cd firefox
 build-prepare.sh
@@ -59,6 +59,10 @@ build.sh
 exit
 ./install.sh # you may run this with sudo if your current user is not permitted to write into the installation directory (default is ~/bin/)
 ```
+
+## Out Of Memory
+
+`run-container.sh` starts the container with `--oom-score-adj 1000`, so when the host runs out of memory the build is killed first instead of other processes. If the build gets OOM-killed (exit code 137), lower `JOBS` in `mozconfig`.
 
 ## Troubleshooting
 
