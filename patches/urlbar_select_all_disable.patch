@@ -1,5 +1,5 @@
 diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
-index 84b6936a5598..962d0be8417d 100644
+index bebd239f31ac..9c2bba5a5230 100644
 --- a/browser/components/search/content/searchbar.js
 +++ b/browser/components/search/content/searchbar.js
 @@ -563,6 +563,7 @@
@@ -11,22 +11,22 @@ index 84b6936a5598..962d0be8417d 100644
          !this._preventClickSelectsAll &&
          document.activeElement == this._textbox &&
 diff --git a/browser/components/urlbar/content/SmartbarInput.mjs b/browser/components/urlbar/content/SmartbarInput.mjs
-index a4e667b59a22..cee5e43abde1 100644
+index 22f1a5e27a1c..b6b46632fd7f 100644
 --- a/browser/components/urlbar/content/SmartbarInput.mjs
 +++ b/browser/components/urlbar/content/SmartbarInput.mjs
-@@ -6068,6 +6068,7 @@ ${
+@@ -6083,6 +6083,7 @@ ${
     *  Urlbar state, and whether the selection is empty.
     */
    #maybeSelectAll() {
 +    return;
-     if (
-       !this._preventClickSelectsAll &&
-       this.#compositionState != UrlbarShared.COMPOSITION.COMPOSING &&
+     if (this.#isSmartbarMode) {
+       return;
+     }
 diff --git a/browser/components/urlbar/content/UrlbarInputBase.mjs b/browser/components/urlbar/content/UrlbarInputBase.mjs
-index 8be35b58c536..52b9903f98e4 100644
+index 9093501ce7d2..3a575e4e5a71 100644
 --- a/browser/components/urlbar/content/UrlbarInputBase.mjs
 +++ b/browser/components/urlbar/content/UrlbarInputBase.mjs
-@@ -5353,6 +5353,7 @@ ${
+@@ -5110,6 +5110,7 @@ ${
     *  Urlbar state, and whether the selection is empty.
     */
    #maybeSelectAll() {
