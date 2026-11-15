@@ -109,4 +109,24 @@ echo "install firefox desktop file into ~/.local/share/applications?"
 ask_yn
 reset-ask_yn
 
-echo "Remember to rm -rf \"$target_dir\""
+# list cleanup commands for old firefox profile backups
+backup_root="/var/tmp/$UID/.mozilla"
+old_backups=()
+if [ -d "$backup_root" ]; then
+    while IFS= read -r dir; do
+        [ "$dir" = "${target_dir:-}" ] && continue
+        old_backups+=("$dir")
+    done < <(find "$backup_root" -mindepth 1 -maxdepth 1 -type d | sort --version-sort)
+fi
+if [ ${#old_backups[@]} -gt 0 ]; then
+    echo
+    echo "Old firefox profile backups in \"$backup_root\", remove with:"
+    for dir in "${old_backups[@]}"; do
+        echo "  rm -rf \"$dir\""
+    done
+fi
+
+if [ -n "${target_dir:-}" ]; then
+    echo
+    echo "Remember to rm -rf \"$target_dir\" (backup made just now)"
+fi
